@@ -24,7 +24,7 @@ public class VendaController {
     public ResponseEntity<ApiResponse> addVenda(@RequestBody Venda venda){
         try {
             Venda vendas = vendaService.addVenda(venda);
-            return ResponseEntity.ok(new ApiResponse("Produto adicionado com sucesso: ", vendas));
+            return ResponseEntity.ok(new ApiResponse("Venda adicionado com sucesso: ", vendas));
         } catch (GlobalExcecao e) {
             return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage(),null));
         }
@@ -34,7 +34,7 @@ public class VendaController {
     public ResponseEntity<ApiResponse> atualizarVenda(@PathVariable Long id,@RequestBody Venda venda){
         try {
             Venda vendas = vendaService.atualizarVenda(id,venda);
-            return ResponseEntity.ok(new ApiResponse("Produto atualizado com sucesso: ", vendas));
+            return ResponseEntity.ok(new ApiResponse("Venda atualizado com sucesso: ", vendas));
         } catch (GlobalExcecao e) {
             return ResponseEntity.status(NOT_FOUND).body(new ApiResponse(e.getMessage(),null));
         }
@@ -44,7 +44,7 @@ public class VendaController {
     public ResponseEntity<ApiResponse> deleteVenda(@PathVariable Long produtoId){
         try {
             vendaService.deleteVenda(produtoId);
-            return ResponseEntity.ok(new ApiResponse("Produto deletado com sucesso: ", produtoId));
+            return ResponseEntity.ok(new ApiResponse("Venda deletado com sucesso: ", produtoId));
         } catch (GlobalExcecao e) {
             return ResponseEntity.status(NOT_FOUND).body(new ApiResponse(e.getMessage(),null));
         }

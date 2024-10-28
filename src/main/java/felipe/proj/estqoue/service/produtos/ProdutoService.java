@@ -35,17 +35,12 @@ public class ProdutoService implements IProdutoService {
                     return fornecedorRepositorio.save(newFornecedor);
                 });
 
-        // Atualizar o fornecedor no request
         request.setFornecedor(fornecedor);
-
-        // Criar o conjunto de fornecedores para o produto
         Set<Fornecedor> fornecedores = new HashSet<>();
         fornecedores.add(fornecedor);
-
-        // Criar o produto com as informações fornecidas no request
+        validarProduto(request);
         Produto produto = criarProduto(request, fornecedores);
 
-        // Salvar o produto no repositório
         return produtoRepositorio.save(produto);
     }
 
@@ -54,6 +49,7 @@ public class ProdutoService implements IProdutoService {
                 request.getNome(),
                 request.getQuantidade(),
                 request.getPrecoCompra(),
+                request.getPrecoVenda(),
                 request.getCategoria(),
                 request.getDataCompra(),
                 request.getDataValidade(),
@@ -61,10 +57,23 @@ public class ProdutoService implements IProdutoService {
     }
 
     private void validarProduto(AddProdutoRequest request) {
+        if (request.getQuantidade() < 0) {
+            throw new IllegalArgumentException("A quantidade não pode ser negativa.");
+        }
         if (request.getPrecoCompra() <= 0) {
-            throw new IllegalArgumentException("O preço deve ser positivo.");
+            throw new IllegalArgumentException("O preço de compra deve ser positivo.");
+        }
+        if (request.getPrecoVenda() <= 0) {
+            throw new IllegalArgumentException("O preço de venda deve ser positivo.");
+        }
+        if (request.getPrecoVenda() < request.getPrecoCompra()) {
+            throw new IllegalArgumentException("O preço de venda deve ser maior que o preço de compra.");
+        }
+        if (request.getDataValidade() != null && request.getDataValidade().isBefore(request.getDataCompra())) {
+            throw new IllegalArgumentException("A data de validade não pode ser anterior à data de compra.");
         }
     }
+
 
     @Override
     public Produto updateProduto(AtualizarProdutoRequest request, Long produtoId) {
@@ -78,6 +87,7 @@ public class ProdutoService implements IProdutoService {
         produtoExistente.setNome(request.getNome());
         produtoExistente.setQuantidade(request.getQuantidade());
         produtoExistente.setPrecoCompra(request.getPrecoCompra());
+        produtoExistente.setPrecoVenda(request.getPrecoVenda());
         produtoExistente.setCategoria(request.getCategoria());
         produtoExistente.setDataCompra(request.getDataCompra());
         produtoExistente.setDataValidade(request.getDataValidade());

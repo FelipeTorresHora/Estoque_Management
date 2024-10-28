@@ -1,5 +1,6 @@
 package felipe.proj.estqoue.controller;
 
+
 import felipe.proj.estqoue.entidades.Fornecedor;
 import felipe.proj.estqoue.excecao.GlobalExcecao;
 import felipe.proj.estqoue.response.ApiResponse;
@@ -23,27 +24,27 @@ public class FornecedorController {
     public ResponseEntity<ApiResponse> addFornecedor(@RequestBody Fornecedor fornecedor){
         try {
             Fornecedor fornecedores = forncedeorService.addFornecedor(fornecedor);
-            return ResponseEntity.ok(new ApiResponse("Produto adicionado com sucesso: ", fornecedores));
+            return ResponseEntity.ok(new ApiResponse("Fornecedor adicionado com sucesso: ", fornecedores));
         } catch (GlobalExcecao e) {
             return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage(),null));
         }
     }
 
-    @PutMapping("/{produtoId}/update")
+    @PutMapping("/{id}/update")
     public ResponseEntity<ApiResponse> atualizarFornecedor(@RequestBody Fornecedor fornecedor, @PathVariable Long id){
         try {
             Fornecedor fornecedores = forncedeorService.atualizarFornecedor(fornecedor, id);
-            return ResponseEntity.ok(new ApiResponse("Produto atualizado com sucesso: ", fornecedores));
+            return ResponseEntity.ok(new ApiResponse("Fornecedor atualizado com sucesso: ", fornecedores));
         } catch (GlobalExcecao e) {
             return ResponseEntity.status(NOT_FOUND).body(new ApiResponse(e.getMessage(),null));
         }
     }
 
-    @DeleteMapping ("/{produtoId}/delete")
-    public ResponseEntity<ApiResponse> deleteFornecedor(@PathVariable Long produtoId){
+    @DeleteMapping ("/{id}/delete")
+    public ResponseEntity<ApiResponse> deleteFornecedor(@PathVariable Long id){
         try {
-            forncedeorService.deleteFornecedor(produtoId);
-            return ResponseEntity.ok(new ApiResponse("Produto deletado com sucesso: ", produtoId));
+            forncedeorService.deleteFornecedor(id);
+            return ResponseEntity.ok(new ApiResponse("Fornecedor deletado com sucesso: ", id));
         } catch (GlobalExcecao e) {
             return ResponseEntity.status(NOT_FOUND).body(new ApiResponse(e.getMessage(),null));
         }

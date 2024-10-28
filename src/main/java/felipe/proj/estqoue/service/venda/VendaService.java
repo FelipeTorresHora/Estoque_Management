@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Optional;
 @Service
 public class VendaService implements IVendaService{
-
     private final VendaRepositorio vendaRepositorio;
     private final ProdutoRepositorio produtoRepositorio;
 
@@ -21,7 +20,6 @@ public class VendaService implements IVendaService{
         this.vendaRepositorio = vendaRepositorio;
         this.produtoRepositorio = produtoRepositorio;
     }
-
 
     @Override
     public Venda addVenda(Venda venda) {
@@ -56,7 +54,7 @@ public class VendaService implements IVendaService{
 
         for (ItemVenda item : venda.getItens()) {
 
-            BigDecimal precoTotal = BigDecimal.valueOf(item.getProduto().getPrecoCompra() * item.getQuantidade());
+            BigDecimal precoTotal = BigDecimal.valueOf(item.getProduto().getPrecoVenda() * item.getQuantidade());
             item.setValorTotalItem(precoTotal);
             valorTotal = valorTotal.add(precoTotal);
         }

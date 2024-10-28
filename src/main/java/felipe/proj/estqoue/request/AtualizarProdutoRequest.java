@@ -11,8 +11,9 @@ public class AtualizarProdutoRequest {
     private String nome;
     private int quantidade;
     private double precoCompra;
+    private double precoVenda;
     private String categoria;
-    private Fornecedor fornecedor;
+    Fornecedor fornecedor;
     private LocalDate dataCompra;
     private LocalDate dataValidade;
 
@@ -48,6 +49,14 @@ public class AtualizarProdutoRequest {
         this.precoCompra = precoCompra;
     }
 
+    public double getPrecoVenda() {
+        return precoVenda;
+    }
+
+    public void setPrecoVenda(double precoVenda) {
+        this.precoVenda = precoVenda;
+    }
+
     public String getCategoria() {
         return categoria;
     }
@@ -81,30 +90,30 @@ public class AtualizarProdutoRequest {
     }
 
     @Override
-    public String
-    toString() {
-        return "AddProdutoResquest{" +
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AtualizarProdutoRequest that = (AtualizarProdutoRequest) o;
+        return quantidade == that.quantidade && Double.compare(precoCompra, that.precoCompra) == 0 && Double.compare(precoVenda, that.precoVenda) == 0 && Objects.equals(id, that.id) && Objects.equals(nome, that.nome) && Objects.equals(categoria, that.categoria) && Objects.equals(fornecedor, that.fornecedor) && Objects.equals(dataCompra, that.dataCompra) && Objects.equals(dataValidade, that.dataValidade);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, nome, quantidade, precoCompra, precoVenda, categoria, fornecedor, dataCompra, dataValidade);
+    }
+
+    @Override
+    public String toString() {
+        return "AtualizarProdutoRequest{" +
                 "id=" + id +
                 ", nome='" + nome + '\'' +
                 ", quantidade=" + quantidade +
                 ", precoCompra=" + precoCompra +
+                ", precoVenda=" + precoVenda +
                 ", categoria='" + categoria + '\'' +
                 ", fornecedor=" + fornecedor +
                 ", dataCompra=" + dataCompra +
                 ", dataValidade=" + dataValidade +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        AtualizarProdutoRequest that = (AtualizarProdutoRequest) o;
-        return quantidade == that.quantidade && Double.compare(precoCompra, that.precoCompra) == 0 && Objects.equals(id, that.id) && Objects.equals(nome, that.nome) && Objects.equals(categoria, that.categoria) && Objects.equals(fornecedor, that.fornecedor) && Objects.equals(dataCompra, that.dataCompra) && Objects.equals(dataValidade, that.dataValidade);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, nome, quantidade, precoCompra, categoria, fornecedor, dataCompra, dataValidade);
     }
 }

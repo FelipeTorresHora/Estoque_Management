@@ -30,8 +30,10 @@ public class FornecedorService implements IForncedeorService{
     public Fornecedor atualizarFornecedor(Fornecedor fornecedor, Long id) {
         return Optional.ofNullable(getFornecedorById(id)).map(fornecedorAntigo -> {
             fornecedorAntigo.setFornecedorNome(fornecedor.getFornecedorNome());
+            fornecedorAntigo.setNumero(fornecedor.getNumero());
+            fornecedorAntigo.setAvaliacao(fornecedor.getAvaliacao());
             return fornecedorRepositorio.save(fornecedorAntigo);
-        }).orElseThrow(()-> new GlobalExcecao("Fornecedor não encontrada!"));
+        }).orElseThrow(() -> new GlobalExcecao("Fornecedor não encontrado!"));
     }
 
     @Override

@@ -12,15 +12,17 @@ public class Produto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column
+    @Column(nullable = false)
     private String nome;
     @Column
     private int quantidade;
     @Column
     private double precoCompra;
     @Column
+    private double precoVenda;
+    @Column(nullable = false)
     private String categoria;
-    @Column
+    @Column(nullable = false)
     private LocalDate dataCompra;
     @Column
     private LocalDate  dataValidade;
@@ -35,11 +37,11 @@ public class Produto {
 
     public Produto() {}
 
-    public Produto(String nome, int quantidade, double precoCompra, String categoria, LocalDate dataCompra, LocalDate dataValidade,   Set<Fornecedor> fornecedor) {
-
+    public Produto(String nome, int quantidade, double precoCompra, double precoVenda, String categoria, LocalDate dataCompra, LocalDate dataValidade, Set<Fornecedor> fornecedor) {
         this.nome = nome;
         this.quantidade = quantidade;
         this.precoCompra = precoCompra;
+        this.precoVenda = precoVenda;
         this.categoria = categoria;
         this.dataCompra = dataCompra;
         this.dataValidade = dataValidade;
@@ -76,6 +78,14 @@ public class Produto {
 
     public void setPrecoCompra(double precoCompra) {
         this.precoCompra = precoCompra;
+    }
+
+    public double getPrecoVenda() {
+        return precoVenda;
+    }
+
+    public void setPrecoVenda(double precoVenda) {
+        this.precoVenda = precoVenda;
     }
 
     public String getCategoria() {
@@ -115,12 +125,12 @@ public class Produto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Produto produto = (Produto) o;
-        return quantidade == produto.quantidade && Double.compare(precoCompra, produto.precoCompra) == 0 && Objects.equals(id, produto.id) && Objects.equals(nome, produto.nome) && Objects.equals(categoria, produto.categoria) && Objects.equals(fornecedor, produto.fornecedor) && Objects.equals(dataCompra, produto.dataCompra) && Objects.equals(dataValidade, produto.dataValidade);
+        return quantidade == produto.quantidade && Double.compare(precoCompra, produto.precoCompra) == 0 && Double.compare(precoVenda, produto.precoVenda) == 0 && Objects.equals(id, produto.id) && Objects.equals(nome, produto.nome) && Objects.equals(categoria, produto.categoria) && Objects.equals(dataCompra, produto.dataCompra) && Objects.equals(dataValidade, produto.dataValidade) && Objects.equals(fornecedor, produto.fornecedor);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nome, quantidade, precoCompra, categoria, fornecedor, dataCompra, dataValidade);
+        return Objects.hash(id, nome, quantidade, precoCompra, precoVenda, categoria, dataCompra, dataValidade, fornecedor);
     }
 
     @Override
@@ -130,14 +140,11 @@ public class Produto {
                 ", nome='" + nome + '\'' +
                 ", quantidade=" + quantidade +
                 ", precoCompra=" + precoCompra +
+                ", precoVenda=" + precoVenda +
                 ", categoria='" + categoria + '\'' +
-                ", fornecedor=" + fornecedor +
                 ", dataCompra=" + dataCompra +
                 ", dataValidade=" + dataValidade +
+                ", fornecedor=" + fornecedor +
                 '}';
-    }
-
-    public boolean isAtivo() {
-        return false;
     }
 }
